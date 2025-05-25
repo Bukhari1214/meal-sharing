@@ -3,25 +3,25 @@ import knex from "../database_client.js";
 
 const reservations = express.Router();
 
-const routes = [
-  { route1: "/my-reservations" }, // This is the GET route to get all RESERVATIONS from the database
-  { route2: "/my-reservations" }, // This is the POST route to add new RESERVATION to the database
-  { route3: "/my-reservations/:id" }, // This is the GET route to get RESERVATION from the database using id
-  { route4: "/my-reservations/:id" }, // This is the PUT route to update RESERVATION in the database using id
-  { route5: "/my-reservations/:id" }, // This is the DELETE route to delete RESERVATION from the database using id
-];
+// const routes = [
+//   { route1: "/my-reservations" }, // This is the GET route to get all RESERVATIONS from the database
+//   { route2: "/my-reservations" }, // This is the POST route to add new RESERVATION to the database
+//   { route3: "/my-reservations/:id" }, // This is the GET route to get RESERVATION from the database using id
+//   { route4: "/my-reservations/:id" }, // This is the PUT route to update RESERVATION in the database using id
+//   { route5: "/my-reservations/:id" }, // This is the DELETE route to delete RESERVATION from the database using id
+// ];
 
-// This is a base route to say Hello and show the routes available in the RESERVATION Table.
-reservations.get("/", (req, res) => {
-  res.json({
-    message:
-      "Hello! This is the MEAL SHARING APP, HOMEWORK NODEJS WEEK 02 Defining Routes on reservations Table",
-    Routes: routes,
-  });
-});
+// // This is a base route to say Hello and show the routes available in the RESERVATION Table.
+// reservations.get("/", (req, res) => {
+//   res.json({
+//     message:
+//       "Hello! This is the MEAL SHARING APP, HOMEWORK NODEJS WEEK 02 Defining Routes on reservations Table",
+//     Routes: routes,
+//   });
+// });
 
 // This is the GET route (localhost:3005/api/reservations/my-reservations) to get all RESERVATIONS from the database.
-reservations.get("/my-reservations", async (req, res) => {
+reservations.get("/", async (req, res) => {
   try {
     const reservations = await knex("reservation")
       .select("*")
@@ -34,7 +34,7 @@ reservations.get("/my-reservations", async (req, res) => {
 });
 
 // This is the Post route (localhost:3005/api/reservations/my-reservations) to add new RESERVATION to the database.
-reservations.post("/my-reservations", async (req, res) => {
+reservations.post("/", async (req, res) => {
   try {
     const {
       meal_id,
@@ -96,7 +96,7 @@ reservations.post("/my-reservations", async (req, res) => {
 // }
 
 // This is the GET route (localhost:3005/api/reservations/my-reservations/:id) to get RESERVATION from the database using id.
-reservations.get("/my-reservations/:id", async (req, res) => {
+reservations.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const reservation = await knex("reservation").where({ id }).first();
@@ -111,7 +111,7 @@ reservations.get("/my-reservations/:id", async (req, res) => {
 });
 
 // This is the PUT route (localhost:3005/api/reservations/my-reservations/:id) to update RESERVATION in the database using id.
-reservations.put("/my-reservations/:id", async (req, res) => {
+reservations.put("/:id", async (req, res) => {
   const { id } = req.params;
   const { meal_id, number_of_guests, created_date, contact_phonenumber } =
     req.body;
@@ -143,7 +143,7 @@ reservations.put("/my-reservations/:id", async (req, res) => {
 });
 
 // This is the DELETE route (localhost:3005/api/reservations/my-reservations/:id) to delete RESERVATION from the database using id.
-reservations.delete("/my-reservations/:id", async (req, res) => {
+reservations.delete("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const reservationToDelete = await knex("reservation").where({ id }).first();

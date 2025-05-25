@@ -3,24 +3,24 @@ import knex from "../database_client.js";
 
 const meals = express.Router();
 
-const routes = [
-  { route1: "/my-meals" }, // This is the GET route to get all meals from the database
-  { route2: "/my-meals" }, // This is the POST route to add new meal to the database
-  { route3: "/my-meals/:id" }, // This is the GET route to get meal from the database using id
-  { route4: "/my-meals/:id" }, // This is the PUT route to update meal in the database using id
-  { route5: "/my-meals/:id" }, // This is the DELETE route to delete meal from the database using id
-];
+// const routes = [
+//   { route1: "/my-meals" }, // This is the GET route to get all meals from the database
+//   { route2: "/my-meals" }, // This is the POST route to add new meal to the database
+//   { route3: "/my-meals/:id" }, // This is the GET route to get meal from the database using id
+//   { route4: "/my-meals/:id" }, // This is the PUT route to update meal in the database using id
+//   { route5: "/my-meals/:id" }, // This is the DELETE route to delete meal from the database using id
+// ];
 
-// This is a base route to say Hello and show the routes available in the MEALS Table.
-meals.get("/", (req, res) => {
-  res.json({
-    message: "Hello! This is the MEAL SHARING APP",
-    routes: routes,
-  });
-});
+// // This is a base route to say Hello and show the routes available in the MEALS Table.
+// meals.get("/", (req, res) => {
+//   res.json({
+//     message: "Hello! This is the MEAL SHARING APP",
+//     routes: routes,
+//   });
+// });
 
 // This is the GET route (localhost:3005/api/meals/my-meals) to get all meals from the database.
-meals.get("/my-meals", async (req, res) => {
+meals.get("/", async (req, res) => {
   try {
     const meals = await knex("meal").select("*").orderBy("id", "asc");
     res.json(meals);
@@ -31,7 +31,7 @@ meals.get("/my-meals", async (req, res) => {
 });
 
 // This is the Post route (localhost:3005/api/meals/my-meals) to add new meal to the database.
-meals.post("/my-meals", async (req, res) => {
+meals.post("/", async (req, res) => {
   try {
     const {
       title,
@@ -98,14 +98,14 @@ meals.post("/my-meals", async (req, res) => {
 //   "title": "LAMB MEAL",
 //   "description": "Enjoy fresh LAMB Meal with friends!",
 //   "location": "Tokyo",
-//   "when": "2025-06-15T19:00:00",
+//   "when": "2025-05-22T12:00:00",
 //   "max_reservations": 20,
 //   "price": 75.5,
 //   "created_date": "2025-05-22T12:00:00"
 // }
 
 // This is the GET route (localhost:3005/api/meals/my-meals/:id) to get meal from the database using id.
-meals.get("/my-meals/:id", async (req, res) => {
+meals.get("/:id", async (req, res) => {
   try {
     const mealId = parseInt(req.params.id, 10);
 
@@ -127,7 +127,7 @@ meals.get("/my-meals/:id", async (req, res) => {
 });
 
 // This is the PUT route (localhost:3005/api/meals/my-meals/:id) to update meal in the database using id.
-meals.put("/my-meals/:id", async (req, res) => {
+meals.put("/:id", async (req, res) => {
   try {
     const mealId = parseInt(req.params.id, 10);
     const { title, description, location, when, max_reservations, price } =
@@ -186,7 +186,7 @@ meals.put("/my-meals/:id", async (req, res) => {
 });
 
 // This is the DELETE route (localhost:3005/api/meals/my-meals/:id) to delete meal from the database using id.
-meals.delete("/my-meals/:id", async (req, res) => {
+meals.delete("/:id", async (req, res) => {
   try {
     const mealId = parseInt(req.params.id, 10);
 
