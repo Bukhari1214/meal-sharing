@@ -20,7 +20,7 @@ const meals = express.Router();
 // });
 
 // This is the GET route (localhost:3005/api/meals) to get all meals from the database.
-// APPLIED all query parameters as per asked in assignmentto this route
+// APPLIED all query parameters as per asked in assignment to this route (WEEK03)
 meals.get("/", async (req, res) => {
   try {
     const rawQuery = req.query;
