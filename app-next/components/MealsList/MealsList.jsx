@@ -28,8 +28,20 @@ const MealsList = () => {
   return (
     <div className="meals-container">
       <h1 className="meals-heading">All Meals</h1>
+
       {loading && <p className="meals-message">Loading...</p>}
-      {error && <p className="meals-error">Error: {error}</p>}
+      {error && (
+        <p className="meals-error">
+          <strong>Error:</strong> {error}
+          <br />
+          Please check your network connection or database server.
+        </p>
+      )}
+
+      {!loading && !error && meals.length === 0 && (
+        <p className="meals-message">No meals to display.</p>
+      )}
+
       <ul className="meals-list">
         {meals.map((meal) => (
           <li key={meal.id} className="meal-card">

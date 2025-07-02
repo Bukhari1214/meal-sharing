@@ -52,3 +52,10 @@
   max-width: 1000px;
   margin: 0 auto;
 }
+
+.meals-heading {
+  text-align: center;
+  font-size: 3rem;
+  margin-bottom: 1.5rem;
+  color: purple;
+}
