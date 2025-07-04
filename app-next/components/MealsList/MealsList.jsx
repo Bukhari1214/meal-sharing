@@ -1,5 +1,8 @@
+"use client";
+
 import React, { useEffect, useState } from "react";
-import "./MealsList.css";
+import Link from "next/link";
+import Meal from "../Meal/Meal";
 
 const MealsList = () => {
   const [meals, setMeals] = useState([]);
@@ -25,32 +28,34 @@ const MealsList = () => {
     fetchMeals();
   }, []);
 
+  if (loading) {
+    return <p className="meals-message">Loading meals...</p>;
+  }
+
+  if (error) {
+    return (
+      <p className="meals-error">
+        <strong>Error:</strong> {error}
+        <br />
+        Please check your network connection or API server.
+      </p>
+    );
+  }
+
+  if (meals.length === 0) {
+    return <p className="meals-message">No meals to display.</p>;
+  }
+
   return (
     <div className="meals-container">
       <h1 className="meals-heading">All Meals</h1>
-
-      {loading && <p className="meals-message">Loading...</p>}
-      {error && (
-        <p className="meals-error">
-          <strong>Error:</strong> {error}
-          <br />
-          Please check your network connection or database server.
-        </p>
-      )}
-
-      {!loading && !error && meals.length === 0 && (
-        <p className="meals-message">No meals to display.</p>
-      )}
-
-      <ul className="meals-list">
+      <div className="meals-grid">
         {meals.map((meal) => (
-          <li key={meal.id} className="meal-card">
-            <h2 className="meal-title">{meal.title}</h2>
-            <p className="meal-description">{meal.description}</p>
-            <p className="meal-price">Price: ${meal.price}</p>
-          </li>
+          <Link key={meal.id} href={`/meals/${meal.id}`}>
+            <Meal meal={meal} />
+          </Link>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
