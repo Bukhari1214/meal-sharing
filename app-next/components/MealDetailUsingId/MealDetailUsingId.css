@@ -1,0 +1,74 @@
+.meal-card-detail {
+  width: 90vw;
+  max-width: 400px;
+  height: auto;
+  min-height: 300px;
+  margin: 50px auto;
+  padding: 20px;
+  background: conic-gradient(
+    from 0deg,
+    #3e3a4f 0% 33%,
+    #5a4b81 33% 66%,
+    #2d2a3e 66% 100%
+  );
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  gap: 1rem;
+  width: 100%;
+}
+
+.left-button,
+.right-button {
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  border: 2px solid #3e3a4f;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #5a4b81;
+  color: white;
+  transition: background 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 4px 0 #3e3a4f;
+  position: relative;
+  top: 0;
+  width: 48%;
+  text-align: center;
+}
+
+.left-button:hover,
+.right-button:hover {
+  background: #3e3a4f;
+  box-shadow: 0 6px 0 #2d2a3e;
+  transform: translateY(-2px);
+}
+
+@media (min-width: 600px) {
+  .meal-card-detail {
+    max-width: 450px;
+    min-height: 320px;
+  }
+}
+
+@media (min-width: 900px) {
+  .meal-card-detail {
+    max-width: 500px;
+    min-height: 340px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .meal-card-detail {
+    max-width: 600px;
+    min-height: 360px;
+  }
+}
