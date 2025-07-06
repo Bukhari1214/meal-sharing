@@ -15,7 +15,7 @@ export default function Reservations({ meal, onClose }) {
 
   useEffect(() => {
     setLoadingReservations(true);
-    fetch("http://localhost:3005/api/reservations")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/meals/reservations`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch reservations");
         return res.json();

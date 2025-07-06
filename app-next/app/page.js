@@ -12,7 +12,7 @@ export default function HomePage() {
   useEffect(() => {
     async function fetchMeals() {
       try {
-        const res = await fetch("http://localhost:3005/api/meals");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/meals`);
         if (!res.ok) throw new Error("Failed to fetch meals");
         const data = await res.json();
         setMeals(data.slice(0, 4));

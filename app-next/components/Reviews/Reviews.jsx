@@ -15,7 +15,7 @@ export default function Reviews({ meal, onClose }) {
 
   const fetchReviews = () => {
     setLoading(true);
-    fetch("http://localhost:3005/api/reviews")
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/meals/reviews`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch reviews");
         return res.json();

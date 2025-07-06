@@ -30,13 +30,15 @@ export default function ReviewForm({ meal, onClose, onSuccess }) {
     };
 
     setLoading(true);
-
     try {
-      const res = await fetch("http://localhost:3005/api/reviews", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(reviewData),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/meals/reviews`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(reviewData),
+        }
+      );
 
       if (!res.ok) {
         const errData = await res.json();

@@ -14,7 +14,7 @@ export default function ReservationForm({ meal, onClose }) {
 
   const formatDate = () => {
     const now = new Date();
-    return now.toISOString().slice(0, 19).replace("T", " "); // "YYYY-MM-DD HH:MM:SS"
+    return now.toISOString().slice(0, 19).replace("T", " ");
   };
 
   const handleSubmit = async (e) => {
@@ -33,20 +33,22 @@ export default function ReservationForm({ meal, onClose }) {
       contact_phonenumber: phone,
       contact_email: email,
       number_of_guests: parseInt(guests),
-      created_date: formatDate(), // ✅ Add this
+      created_date: formatDate(),
     };
 
     setLoading(true);
 
     try {
-      const res = await fetch("http://localhost:3005/api/reservations", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reservationData),
-      });
-
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/meals/reservations`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(reservationData),
+        }
+      );
       const result = await res.json();
 
       if (!res.ok) {
