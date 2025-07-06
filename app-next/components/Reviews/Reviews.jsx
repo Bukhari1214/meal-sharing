@@ -15,7 +15,7 @@ export default function Reviews({ meal, onClose }) {
 
   const fetchReviews = () => {
     setLoading(true);
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/meals/reviews`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch reviews");
         return res.json();
@@ -55,28 +55,31 @@ export default function Reviews({ meal, onClose }) {
         ) : reviews.length === 0 ? (
           <p className="reviews-text">No reviews available yet.</p>
         ) : (
-          <ul className="reviews-list">
-            {reviews.map((r, index) => (
+          <ol className="reviews-list">
+            {reviews.map((r) => (
               <li key={r.id} className="reviews-text">
-                <strong>#{String(index + 1).padStart(2, "0")}</strong> —{" "}
-                <strong>{r.stars}/5</strong> — <em>{r.title}</em>:{" "}
-                {r.description}
+                <strong> Rating: {r.stars}/5</strong> — <em>{r.title}</em>:{" "}
+                <p>{r.description}</p>
               </li>
             ))}
-          </ul>
+          </ol>
         )}
-        <button onClick={() => setShowForm(true)} style={{ marginTop: "1rem" }}>
-          Submit a Review
-        </button>
-        <button onClick={onClose} style={{ marginTop: "1rem" }}>
-          Close
-        </button>
-        <button
-          onClick={() => router.push("/meals")}
-          style={{ marginTop: "1rem" }}
-        >
-          Back to Meals List
-        </button>
+
+        <div className="buttons-container">
+          <div className="button-row">
+            <button className="button" onClick={() => setShowForm(true)}>
+              Submit a Review
+            </button>
+          </div>
+          <div className="button-row">
+            <button className="button" onClick={onClose}>
+              Close
+            </button>
+            <button className="button" onClick={() => router.push("/meals")}>
+              Back to Meals List
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

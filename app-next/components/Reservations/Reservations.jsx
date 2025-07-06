@@ -15,7 +15,7 @@ export default function Reservations({ meal, onClose }) {
 
   useEffect(() => {
     setLoadingReservations(true);
-    fetch(`${process.env.NEXT_PUBLIC_API_URL}/meals/reservations`)
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/reservations`)
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch reservations");
         return res.json();
@@ -58,32 +58,28 @@ export default function Reservations({ meal, onClose }) {
             <p className="reservations-text">
               Remaining reservation slots: {remaining}
             </p>
-
-            {total < maxReservations && (
-              <button
-                className="make-reservation-button"
-                onClick={() => setShowForm(true)}
-              >
-                Make A Reservation
-              </button>
-            )}
-
-            {total >= maxReservations && (
-              <p className="reservations-text">
-                No more reservations available for this meal.
-              </p>
-            )}
-
-            <button onClick={onClose}>Close</button>
-
-            <button
-              onClick={() => router.push("/meals")}
-              style={{ marginTop: "1rem" }}
-            >
-              Back to Meals List
-            </button>
           </>
         )}
+
+        <div className="buttons-container">
+          {total < maxReservations &&
+            !loadingReservations &&
+            !errorReservations && (
+              <div className="button-row">
+                <button className="button" onClick={() => setShowForm(true)}>
+                  Make A Reservation
+                </button>
+              </div>
+            )}
+          <div className="button-row">
+            <button className="button" onClick={onClose}>
+              Close
+            </button>
+            <button className="button" onClick={() => router.push("/meals")}>
+              Back to Meals List
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );

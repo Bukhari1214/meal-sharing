@@ -1,49 +1,29 @@
-"use client";
+import HomePage from "@/components/HomePage/HomePage";
 
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import Meal from "@/components/Meal/Meal";
+function getRandomMeals(meals, count) {
+  const shuffled = [...meals].sort(() => 0.5 - Math.random());
+  return shuffled.slice(0, count);
+}
 
-export default function HomePage() {
-  const [meals, setMeals] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+export default async function Page() {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/meals`, {
+      next: { revalidate: 60 },
+    });
 
-  useEffect(() => {
-    async function fetchMeals() {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/meals`);
-        if (!res.ok) throw new Error("Failed to fetch meals");
-        const data = await res.json();
-        setMeals(data.slice(0, 4));
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchMeals();
-  }, []);
+    if (!res.ok) throw new Error("Failed to fetch meals");
 
-  return (
-    <div className="meals-container">
-      <h1 className="meals-heading">Welcome to My Meal Sharing App!</h1>
-      <h2 className="meals-heading">Discover some delicious meals</h2>
+    const json = await res.json();
+    const data = Array.isArray(json) ? json : json.meals || [];
 
-      {loading && <p>Loading meals...</p>}
-      {error && <p>Error: {error}</p>}
+    const randomMeals = getRandomMeals(data, 4);
 
-      <div className="meals-grid">
-        {meals.map((meal) => (
-          <Meal key={meal.id} meal={meal} />
-        ))}
+    return <HomePage meals={randomMeals} />;
+  } catch (error) {
+    return (
+      <div style={{ color: "red", padding: 20 }}>
+        <p>Error loading meals: {error.message}</p>
       </div>
-
-      <Link href="/meals">
-        <button className="button" style={{ marginTop: "20px" }}>
-          See All Meals
-        </button>
-      </Link>
-    </div>
-  );
+    );
+  }
 }

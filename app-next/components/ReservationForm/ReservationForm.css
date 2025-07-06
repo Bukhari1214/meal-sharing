@@ -10,6 +10,8 @@
   justify-content: center;
   align-items: center;
   z-index: 999;
+  overflow-y: auto;
+  padding: 2rem;
 }
 
 .popup-content {
@@ -26,12 +28,18 @@
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
   color: white;
   text-align: center;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 
 .reservation-form-title {
-  font-size: 1.5rem;
-  font-weight: 700;
   margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
+  font-family: "Dearmas", cursive;
+  font-style: italic;
 }
 
 form {
@@ -46,8 +54,8 @@ label {
   flex-direction: column;
   font-weight: 600;
   font-size: 0.9rem;
-  color: #39ff14;
-  text-shadow: 0 0 5px #39ff14, 0 0 10px #39ff14;
+  color: white;
+  text-shadow: 0 0 5px #c9d374, 0 0 10px #a9bd53;
 }
 
 input[type="text"],

@@ -29,17 +29,23 @@
 }
 
 .reservations-title {
-  color: white;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 1rem;
   font-weight: 700;
-  font-size: 1.5rem;
+  font-size: 1.8rem;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
+  font-family: "Dearmas", cursive;
+  font-style: italic;
 }
 
 .reservations-text {
-  font-style: italic;
-  color: #39ff14;
-  text-shadow: 0 0 5px #39ff14, 0 0 10px #39ff14, 0 0 20px #39ff14;
-  margin-bottom: 0.6rem;
+  font-style: normal;
+  color: white;
+  text-shadow: none;
+  text-align: left;
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+  list-style: decimal;
 }
 
 /* Buttons inside popup */

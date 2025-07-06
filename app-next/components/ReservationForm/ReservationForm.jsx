@@ -40,7 +40,7 @@ export default function ReservationForm({ meal, onClose }) {
 
     try {
       const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/meals/reservations`,
+        `${process.env.NEXT_PUBLIC_API_URL}/reservations`,
         {
           method: "POST",
           headers: {
@@ -55,7 +55,9 @@ export default function ReservationForm({ meal, onClose }) {
         throw new Error(result.error || "Failed to make reservation");
       }
 
-      setSuccess("Reservation successful!");
+      setSuccess(
+        <span style={{ color: "limegreen" }}>Reservation successful!</span>
+      );
       setName("");
       setPhone("");
       setEmail("");
@@ -117,16 +119,16 @@ export default function ReservationForm({ meal, onClose }) {
           {error && <p className="error-text">{error}</p>}
           {success && <p className="success-text">{success}</p>}
 
-          <button type="submit" disabled={loading}>
-            {loading ? "Submitting..." : "Submit Reservation"}
-          </button>
-          <button
-            type="button"
-            onClick={onClose}
-            style={{ marginLeft: "1rem" }}
-          >
-            Cancel
-          </button>
+          <div className="buttons-container">
+            <div className="button-row">
+              <button className="button" type="submit" disabled={loading}>
+                {loading ? "Submitting..." : "Submit Reservation"}
+              </button>
+              <button className="button" type="button" onClick={onClose}>
+                Cancel
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </div>

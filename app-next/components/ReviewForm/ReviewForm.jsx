@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import "./ReviewForm.css";
 
 export default function ReviewForm({ meal, onClose, onSuccess }) {
   const [title, setTitle] = useState("");
@@ -31,21 +30,23 @@ export default function ReviewForm({ meal, onClose, onSuccess }) {
 
     setLoading(true);
     try {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/meals/reviews`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(reviewData),
-        }
-      );
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/reviews`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(reviewData),
+      });
 
       if (!res.ok) {
         const errData = await res.json();
         throw new Error(errData.error || "Failed to submit review");
       }
 
-      setSuccess("Review submitted successfully!");
+      setSuccess(
+        <span style={{ color: "limegreen" }}>
+          Review submitted successfully!
+        </span>
+      );
+
       setTitle("");
       setDescription("");
       setStars(5);
@@ -93,16 +94,21 @@ export default function ReviewForm({ meal, onClose, onSuccess }) {
           </label>
           {error && <p className="error-text">{error}</p>}
           {success && <p className="success-text">{success}</p>}
-          <button type="submit" disabled={loading}>
-            {loading ? "Submitting..." : "Submit Review"}
-          </button>
-          <button
-            type="button"
-            onClick={onClose}
-            style={{ marginLeft: "1rem" }}
-          >
-            Cancel
-          </button>
+          <div className="buttons-container">
+            <div className="button-row">
+              <button className="button" type="submit" disabled={loading}>
+                {loading ? "Submitting..." : "Submit Review"}
+              </button>
+              <button
+                className="button"
+                type="button"
+                onClick={onClose}
+                style={{ marginLeft: "1rem" }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </form>
       </div>
     </div>

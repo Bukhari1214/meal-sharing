@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import "./MealDetailUsingId.css";
 import Reviews from "../Reviews/Reviews";
@@ -9,6 +10,7 @@ import Reservations from "../Reservations/Reservations";
 export default function MealDetails({ meal }) {
   const [showReviews, setShowReviews] = useState(false);
   const [showReservations, setShowReservations] = useState(false);
+  const router = useRouter();
 
   return (
     <div className="meal-card-detail">
@@ -17,20 +19,31 @@ export default function MealDetails({ meal }) {
       <p className="meal-price">Price: ${meal.price}</p>
 
       <div className="buttons-container">
-        <button
-          className="left-button"
-          onClick={() => setShowReviews(true)}
-          type="button"
-        >
-          Reviews
-        </button>
-        <button
-          className="right-button"
-          onClick={() => setShowReservations(true)}
-          type="button"
-        >
-          Reservations
-        </button>
+        <div className="button-row">
+          <button
+            className="button"
+            onClick={() => setShowReviews(true)}
+            type="button"
+          >
+            Reviews
+          </button>
+          <button
+            className="button"
+            onClick={() => setShowReservations(true)}
+            type="button"
+          >
+            Reservations
+          </button>
+        </div>
+        <div className="button-row">
+          <button
+            className="button"
+            onClick={() => router.push("/meals")}
+            type="button"
+          >
+            Back to Meals
+          </button>
+        </div>
       </div>
 
       {showReviews && (

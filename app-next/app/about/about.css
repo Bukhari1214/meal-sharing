@@ -1,0 +1,78 @@
+.about-container {
+  max-width: 100%;
+  margin: 2rem 1rem;
+  padding: 0 1rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #3e2f26;
+}
+
+.about-content h1 {
+  display: block;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #fff;
+  font-family: "Dearmas", cursive;
+  font-style: italic;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.8), 0 0 12px rgba(255, 215, 0, 0.6),
+    0 0 18px rgba(255, 215, 0, 0.4);
+  transition: text-shadow 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.about-content h1:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 12px rgba(255, 215, 0, 1), 0 0 24px rgba(255, 215, 0, 0.8),
+    0 0 36px rgba(255, 215, 0, 0.6);
+}
+
+.about-content p {
+  font-style: normal;
+  color: white;
+  text-shadow: none;
+  text-align: left;
+  margin-bottom: 0.8rem;
+  line-height: 1.5;
+}
+
+@media (min-width: 600px) {
+  .about-container {
+    max-width: 540px;
+    margin: 3rem auto;
+  }
+  .about-content h1 {
+    font-size: 2.2rem;
+  }
+  .about-content p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 900px) {
+  .about-container {
+    max-width: 720px;
+  }
+  .about-content h1 {
+    font-size: 2.5rem;
+  }
+  .about-content p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+}
+
+@media (min-width: 1200px) {
+  .about-container {
+    max-width: 900px;
+  }
+  .about-content h1 {
+    font-size: 2.8rem;
+  }
+  .about-content p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+  }
+}

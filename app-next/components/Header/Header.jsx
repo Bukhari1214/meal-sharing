@@ -1,17 +1,50 @@
+"use client";
+
 import React from "react";
+import Link from "next/link";
+import "./Header.css";
 
 const Header = () => {
   return (
-    <header
-      style={{
-        background:
-          "conic-gradient(from 0deg, #3e3a4f 0% 33%, #5a4b81 33% 66%, #2d2a3e 66% 100%)",
-        padding: "1rem",
-      }}
-    >
-      <h1 style={{ color: "white", textAlign: "center" }}>
-        Welcome to MY Meal Sharing App
-      </h1>
+    <header className="header">
+      <div className="header-logo">
+        <img
+          src="/images/meal_sharing_app_logo.png"
+          alt="Logo"
+          className="header-logo-img"
+        />
+      </div>
+
+      <h1 className="header-title">Meal Sharing App</h1>
+
+      <div className="header-nav">
+        <button
+          className="header-nav-toggle"
+          aria-haspopup="true"
+          aria-label="Toggle navigation menu"
+        >
+          ☰
+        </button>
+        <nav className="header-dropdown">
+          <ul className="header-dropdown-list">
+            <li>
+              <Link href="/about">About</Link>
+            </li>
+            <li>
+              <Link href="/">Home</Link>
+            </li>
+            <li>
+              <Link href="/meals">All Meals</Link>
+            </li>
+            <li>
+              <Link href="/search">Search</Link>
+            </li>
+            <li>
+              <Link href="/contact">Contact Us</Link>
+            </li>
+          </ul>
+        </nav>
+      </div>
     </header>
   );
 };

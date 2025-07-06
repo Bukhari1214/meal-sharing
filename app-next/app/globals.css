@@ -1,28 +1,49 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 html,
 body,
 #root {
   height: 100%;
   width: 100%;
-  margin: 0;
-  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #000;
+}
+
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 header,
 main,
 footer {
+  width: 100%;
   margin: 0;
   padding: 0;
 }
 
 .main-container {
-  margin: 0;
-  padding: 0%;
+  flex: 1;
   color: white;
   background-image: url("/images/meal_sharing_app_bg.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: none;
+  text-align: center;
 }
 
 .button {
@@ -33,15 +54,17 @@ footer {
   color: #fff;
   background: conic-gradient(
     from 0deg,
-    #3e3a4f 0% 33%,
-    #5a4b81 33% 66%,
-    #2d2a3e 66% 100%
+    #5c4438 0% 33%,
+    #7a5a7f 33% 66%,
+    #3e2f26 66% 100%
   );
+
   border: none;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 15px rgba(107, 115, 255, 0.4);
+  box-shadow: 0 0 8px 3px rgba(245, 197, 24, 0.8),
+    0 0 15px 6px rgba(245, 197, 24, 0.5);
   user-select: none;
   text-align: center;
   text-decoration: none;
@@ -49,8 +72,8 @@ footer {
 
 .button:hover,
 .button:focus {
-  background: linear-gradient(135deg, #000dff 0%, #6b73ff 100%);
-  box-shadow: 0 6px 20px rgba(0, 13, 255, 0.6);
+  box-shadow: 0 0 12px 4px rgba(245, 197, 24, 1),
+    0 0 25px 8px rgba(245, 197, 24, 0.8), 0 0 35px 12px rgba(245, 197, 24, 0.6);
   transform: translateY(-3px);
   outline: none;
 }
@@ -69,6 +92,7 @@ footer {
 }
 
 .meals-container {
+  color: white;
   max-width: 1200px;
   margin: 2rem auto;
   padding: 0 1rem;
@@ -79,25 +103,53 @@ footer {
   font-weight: 700;
   text-align: center;
   margin-bottom: 1.5rem;
-  color: #e0e1e8;
-  text-shadow: 0 0 5px #61b86e, 0 0 10px #61b86e, 0 0 15px #61b86e;
+  color: white;
+  text-shadow: 0 0 5px #f5c518, 0 0 10px #ffeb3b, 0 0 15px #f5c518;
+  transition: transform 0.3s ease;
 }
 
-.meal-description {
-  font-size: 1rem;
-  color: #e9c8c8;
-  margin-bottom: 0.5rem;
+.meals-heading:hover {
+  transform: scale(1.1);
+}
+
+.meals-intro {
+  max-width: 700px;
+  margin: 1rem auto 2rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: white;
+  text-align: center;
+  text-shadow: 0 0 5px #f5c518, 0 0 10px #ffeb3b, 0 0 15px #f5c518;
+}
+
+.meals-intro:hover {
+  transform: scale(1.1);
 }
 
 .meal-title {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: #dbdfe9;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
+  font-family: "Dearmas", cursive;
+  font-style: italic;
+}
+
+.meal-description {
+  margin-bottom: 1.2rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: #eee;
+  line-height: 1.5;
 }
 
 .meal-price {
-  font-weight: bold;
-  color: #f5c518;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #ffd700;
+  margin-bottom: 1.5rem;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.9);
 }
 
 .meals-grid {
@@ -105,6 +157,47 @@ footer {
   gap: 1.5rem;
   grid-template-columns: repeat(1, 1fr);
   align-items: stretch;
+}
+
+.meals-grid a {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.2s ease, box-shadow 0.5s ease;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.7);
+}
+
+.meals-grid a:hover,
+.meals-grid a:focus {
+  transform: translateY(-5px);
+  box-shadow: 0 0 10px 3px rgba(255, 215, 0, 0.9),
+    0 0 20px 6px rgba(255, 215, 0, 0.7);
+}
+
+.meal-card {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: conic-gradient(
+    from 0deg,
+    #5c4438 0% 33%,
+    #7a5a7f 33% 66%,
+    #3e2f26 66% 100%
+  );
+  border-radius: 8px;
+  padding: 1rem;
+  transition: box-shadow 0.5s ease;
+  box-shadow: 0 0 8px 2px rgba(255, 215, 0, 0.7);
+}
+
+.meal-card:hover {
+  box-shadow: 0 0 10px 3px rgba(255, 215, 0, 0.9),
+    0 0 20px 6px rgba(255, 215, 0, 0.7);
 }
 
 @media (min-width: 600px) {
@@ -123,38 +216,4 @@ footer {
   .meals-grid {
     grid-template-columns: repeat(4, 1fr);
   }
-}
-
-.meals-grid a {
-  text-decoration: none;
-  color: inherit;
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  border-radius: 8px;
-  overflow: hidden;
-}
-
-.meals-grid a:hover,
-.meals-grid a:focus {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.meal-card {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: conic-gradient(
-    from 0deg,
-    #3e3a4f 0% 33%,
-    #5a4b81 33% 66%,
-    #2d2a3e 66% 100%
-  );
-  border-radius: 8px;
-  padding: 1rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease;
 }
