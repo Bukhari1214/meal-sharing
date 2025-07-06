@@ -1,14 +1,24 @@
 html,
 body,
 #root {
-  margin: 0;
-  padding: 0;
   height: 100%;
   width: 100%;
+  margin: 0;
+  padding: 0;
 }
 
-body {
-  background-color: lightgrey;
+header,
+main,
+footer {
+  margin: 0;
+  padding: 0;
+}
+
+.main-container {
+  margin: 0;
+  padding: 0%;
+  color: white;
+  background-image: url("/images/meal_sharing_app_bg.webp");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -69,7 +79,8 @@ body {
   font-weight: 700;
   text-align: center;
   margin-bottom: 1.5rem;
-  color: #333;
+  color: #e0e1e8;
+  text-shadow: 0 0 5px #61b86e, 0 0 10px #61b86e, 0 0 15px #61b86e;
 }
 
 .meal-description {

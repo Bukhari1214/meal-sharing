@@ -12,7 +12,9 @@ const MealsList = () => {
   useEffect(() => {
     const fetchMeals = async () => {
       try {
-        const response = await fetch("http://localhost:3005/api/meals");
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/meals`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch meals");
         }
