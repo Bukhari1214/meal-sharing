@@ -11,16 +11,12 @@ export default function MealDetails({ meal }) {
   const [showReviews, setShowReviews] = useState(false);
   const [showReservations, setShowReservations] = useState(false);
 
-  // const router = useRouter();
-  // const searchParams = useSearchParams();
-  // const from = searchParams.get("from");
+  const router = useRouter();
+ 
 
   const handleBack = () => {
-    // if (from === "search") {
-    //   router.push("/search");
-    // } else {
-    //   router.push("/meals");
-    // }
+      router.push("/meals");
+    
   };
 
   return (
