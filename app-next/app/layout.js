@@ -1,7 +1,13 @@
-import Header from "@/components/Header/Header";
+// app/layout.js
 import "./globals.css";
-import MainLayout from "@/components/Main/Main";
+import Header from "@/components/Header/Header";
 import Footer from "@/components/Footer/Footer";
+import MainLayout from "@/components/Main/Main";
+
+export const metadata = {
+  title: "Meal Sharing App",
+  description: "Find, share, and enjoy delicious meals.",
+};
 
 export default function RootLayout({ children }) {
   return (

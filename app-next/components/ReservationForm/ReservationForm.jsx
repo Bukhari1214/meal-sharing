@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./ReservationForm.css";
 
 export default function ReservationForm({ meal, onClose }) {
@@ -9,36 +9,50 @@ export default function ReservationForm({ meal, onClose }) {
   const [email, setEmail] = useState("");
   const [guests, setGuests] = useState(1);
   const [error, setError] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [formattedDate, setFormattedDate] = useState("");
+  const [reservationDetails, setReservationDetails] = useState(null);
+  const [showConfirm, setShowConfirm] = useState(false);
 
-  const formatDate = () => {
+  useEffect(() => {
     const now = new Date();
-    return now.toISOString().slice(0, 19).replace("T", " ");
-  };
+    const formatted = now.toISOString().slice(0, 19).replace("T", " ");
+    setFormattedDate(formatted);
+  }, []);
 
-  const handleSubmit = async (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
     setError(null);
-    setSuccess(null);
 
     if (!name || !phone || !email || guests < 1) {
       setError("Please fill all fields correctly.");
       return;
     }
 
-    const reservationData = {
-      meal_id: meal.id,
-      contact_name: name,
-      contact_phonenumber: phone,
-      contact_email: email,
-      number_of_guests: parseInt(guests),
-      created_date: formatDate(),
-    };
+    setReservationDetails({
+      name,
+      phone,
+      email,
+      guests,
+    });
 
+    setShowConfirm(true);
+  };
+
+  const handleConfirmSubmit = async () => {
     setLoading(true);
-
+    setError(null);
     try {
+      const reservationData = {
+        meal_id: meal.id,
+        contact_name: reservationDetails.name,
+        contact_phonenumber: reservationDetails.phone,
+        contact_email: reservationDetails.email,
+        number_of_guests: parseInt(reservationDetails.guests),
+        created_date: formattedDate,
+      };
+
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/reservations`,
         {
@@ -49,32 +63,110 @@ export default function ReservationForm({ meal, onClose }) {
           body: JSON.stringify(reservationData),
         }
       );
+
       const result = await res.json();
 
       if (!res.ok) {
         throw new Error(result.error || "Failed to make reservation");
       }
 
-      setSuccess(
-        <span style={{ color: "limegreen" }}>Reservation successful!</span>
-      );
+      setSuccess(true);
+      setShowConfirm(false);
+
       setName("");
       setPhone("");
       setEmail("");
       setGuests(1);
+
+      const now = new Date();
+      const refreshed = now.toISOString().slice(0, 19).replace("T", " ");
+      setFormattedDate(refreshed);
+
+      setTimeout(() => {
+        setSuccess(false);
+        setReservationDetails(null);
+        onClose();
+      }, 2500);
     } catch (err) {
       setError(err.message);
+      setShowConfirm(false);
     } finally {
       setLoading(false);
     }
   };
 
-  return (
-    <div className="popup-overlay" onClick={onClose}>
-      <div className="popup-content" onClick={(e) => e.stopPropagation()}>
-        <h3 className="reservation-form-title">Reserve for: {meal.title}</h3>
+  if (success) {
+    return (
+      <div className="popup-overlay">
+        <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+          <h3 className="popup-title" style={{ color: "limegreen" }}>
+            Reservation successful!
+          </h3>
+          <p>
+            <strong>Name:</strong> {reservationDetails?.name}
+          </p>
+          <p>
+            <strong>Phone:</strong> {reservationDetails?.phone}
+          </p>
+          <p>
+            <strong>Email:</strong> {reservationDetails?.email}
+          </p>
+          <p>
+            <strong>Guests:</strong> {reservationDetails?.guests}
+          </p>
+        </div>
+      </div>
+    );
+  }
 
-        <form onSubmit={handleSubmit}>
+  if (showConfirm) {
+    return (
+      <div className="popup-overlay">
+        <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+          <h1 className="popup-title">Confirm Your Reservation</h1>
+          <p>
+            <strong>Name:</strong> {reservationDetails.name}
+          </p>
+          <p>
+            <strong>Phone:</strong> {reservationDetails.phone}
+          </p>
+          <p>
+            <strong>Email:</strong> {reservationDetails.email}
+          </p>
+          <p>
+            <strong>Guests:</strong> {reservationDetails.guests}
+          </p>
+
+          {error && <p className="error-text">{error}</p>}
+
+          <div className="button-row">
+            <button
+              className="button"
+              onClick={handleConfirmSubmit}
+              disabled={loading}
+            >
+              {loading ? "Submitting..." : "Confirm"}
+            </button>
+            <button
+              className="button"
+              onClick={() => setShowConfirm(false)}
+              style={{ marginLeft: "1rem" }}
+              disabled={loading}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="popup-overlay">
+      <div className="popup-content" onClick={(e) => e.stopPropagation()}>
+        <h3 className="popup-title">Reserve For: {meal.title}</h3>
+
+        <form onSubmit={handleFormSubmit}>
           <label>
             Name
             <input
@@ -117,12 +209,11 @@ export default function ReservationForm({ meal, onClose }) {
           </label>
 
           {error && <p className="error-text">{error}</p>}
-          {success && <p className="success-text">{success}</p>}
 
-          <div className="buttons-container">
+          <div className="reservation-buttons-container">
             <div className="button-row">
-              <button className="button" type="submit" disabled={loading}>
-                {loading ? "Submitting..." : "Submit Reservation"}
+              <button className="button" type="submit">
+                Reserve
               </button>
               <button className="button" type="button" onClick={onClose}>
                 Cancel

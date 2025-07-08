@@ -5,6 +5,17 @@ import { useRouter } from "next/navigation";
 import "./Reviews.css";
 import ReviewForm from "../ReviewForm/ReviewForm.jsx";
 
+function Stars({ count }) {
+  const maxStars = 5;
+  const fullStar = "★";
+  const emptyStar = "☆";
+  return (
+    <span className="stars" aria-label={`${count} out of 5 stars`} role="img">
+      {[...Array(maxStars)].map((_, i) => (i < count ? fullStar : emptyStar))}
+    </span>
+  );
+}
+
 export default function Reviews({ meal, onClose }) {
   const router = useRouter();
 
@@ -57,9 +68,25 @@ export default function Reviews({ meal, onClose }) {
         ) : (
           <ol className="reviews-list">
             {reviews.map((r) => (
-              <li key={r.id} className="reviews-text">
-                <strong> Rating: {r.stars}/5</strong> — <em>{r.title}</em>:{" "}
-                <p>{r.description}</p>
+              <li key={r.id} className="reviews-text review-item">
+                <div
+                  className="review-header"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <div className="review-rating">
+                    <Stars count={r.stars} />
+                  </div>
+                  <div className="review-title">
+                    <em className="glow-title">{r.title}</em>
+                  </div>
+                </div>
+                <div className="review-description">
+                  <p>{r.description}</p>
+                </div>
               </li>
             ))}
           </ol>

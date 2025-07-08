@@ -14,6 +14,16 @@
   padding: 2rem;
 }
 
+.popup-title {
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #fff;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
+  font-family: "Dearmas", cursive;
+  font-style: italic;
+}
+
 .popup-content {
   background: conic-gradient(
     from 0deg,
@@ -40,6 +50,59 @@
   text-shadow: 0 0 6px rgba(255, 215, 0, 0.8);
   font-family: "Dearmas", cursive;
   font-style: italic;
+}
+
+.reservation-buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: none;
+  text-align: center;
+}
+
+.reservation-buttons {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: conic-gradient(
+    from 0deg,
+    #5c4438 0% 33%,
+    #7a5a7f 33% 66%,
+    #3e2f26 66% 100%
+  );
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 0 8px 3px rgba(245, 197, 24, 0.8),
+    0 0 15px 6px rgba(245, 197, 24, 0.5);
+  user-select: none;
+  text-align: center;
+  text-decoration: none;
+}
+
+.reservation-buttons:hover,
+.reservation-buttons:focus {
+  box-shadow: 0 0 12px 4px rgba(245, 197, 24, 1),
+    0 0 25px 8px rgba(245, 197, 24, 0.8), 0 0 35px 12px rgba(245, 197, 24, 0.6);
+  transform: translateY(-3px);
+  outline: none;
+}
+
+.reservation-buttons:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 13, 255, 0.3);
+}
+
+.reservation-buttons:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
 }
 
 form {
@@ -71,33 +134,6 @@ input[type="number"] {
 input:disabled {
   background-color: #999;
   cursor: not-allowed;
-}
-
-button {
-  padding: 0.6rem 1.2rem;
-  font-weight: 600;
-  background: #5a4b81;
-  color: white;
-  border: 2px solid #3e3a4f;
-  border-radius: 6px;
-  cursor: pointer;
-  box-shadow: 0 4px 0 #3e3a4f;
-  transition: background 0.3s ease, transform 0.2s ease;
-  position: relative;
-  top: 0;
-}
-
-button:hover {
-  background: #3e3a4f;
-  box-shadow: 0 6px 0 #2d2a3e;
-  transform: translateY(-2px);
-}
-
-button:disabled {
-  background: #999;
-  cursor: not-allowed;
-  box-shadow: none;
-  transform: none;
 }
 
 .error-text {

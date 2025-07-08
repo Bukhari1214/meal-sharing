@@ -9,7 +9,7 @@ body,
 #root {
   height: 100%;
   width: 100%;
-  font-family: Arial, sans-serif;
+  font-family: "Dearmas", sans-serif;
   background-color: #000;
 }
 
@@ -28,6 +28,7 @@ footer {
 }
 
 .main-container {
+  position: relative;
   flex: 1;
   color: white;
   background-image: url("/images/meal_sharing_app_bg.webp");
@@ -35,6 +36,18 @@ footer {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  z-index: 1;
+}
+
+.main-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: -1;
 }
 
 .button-container {

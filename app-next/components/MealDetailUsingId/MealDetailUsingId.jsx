@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import "./MealDetailUsingId.css";
 import Reviews from "../Reviews/Reviews";
@@ -10,7 +10,18 @@ import Reservations from "../Reservations/Reservations";
 export default function MealDetails({ meal }) {
   const [showReviews, setShowReviews] = useState(false);
   const [showReservations, setShowReservations] = useState(false);
+
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const from = searchParams.get("from"); // 'search' or 'list'
+
+  const handleBack = () => {
+    if (from === "search") {
+      router.push("/search");
+    } else {
+      router.push("/meals");
+    }
+  };
 
   return (
     <div className="meal-card-detail">
@@ -36,12 +47,8 @@ export default function MealDetails({ meal }) {
           </button>
         </div>
         <div className="button-row">
-          <button
-            className="button"
-            onClick={() => router.push("/meals")}
-            type="button"
-          >
-            Back to Meals
+          <button className="button" onClick={handleBack} type="button">
+            ⏪ Return ⏩
           </button>
         </div>
       </div>

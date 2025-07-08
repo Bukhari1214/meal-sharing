@@ -10,9 +10,9 @@ export async function generateStaticParams() {
 }
 
 export default async function MealPage({ params }) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/meals/${params.id}`
-  );
+  const { id } = await params;
+
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/meals/${id}`);
 
   if (!res.ok) throw new Error("Failed to fetch meal");
 

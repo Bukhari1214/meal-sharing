@@ -1,14 +1,14 @@
 import React from "react";
-import "./Footer.css";
+import styles from "./Footer.module.css";
 
 const Footer = () => {
   return (
-    <footer className="footer">
-      <p className="footer-copyright">
+    <footer className={styles.footer}>
+      <p className={styles["footer-copyright"]}>
         &copy; {new Date().getFullYear()} Meal Sharing. All rights reserved
         @HYF.
       </p>
-      <div className="footer-contact">
+      <div className={styles["footer-contact"]}>
         <a href="mailto:wasimhussain3@gmail.com" aria-label="Email">
           ✉️ Send Us Email
         </a>

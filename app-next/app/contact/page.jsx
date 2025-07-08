@@ -1,14 +1,7 @@
 "use client";
 
-import "./contact.css";
+import Contact from "@/components/Contact/Contact";
 
 export default function ContactPage() {
-  return (
-    <main className="contact-container">
-      <h1 className="contact-title">Contact Page Coming Soon</h1>
-      <p className="contact-message">
-        We're still working on this page. Please check back later!
-      </p>
-    </main>
-  );
+  return <Contact />;
 }
