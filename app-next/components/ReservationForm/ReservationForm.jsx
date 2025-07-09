@@ -43,7 +43,7 @@ export default function ReservationForm({ meal, onClose }) {
         contact_phonenumber: reservationDetails.phone,
         contact_email: reservationDetails.email,
         number_of_guests: parseInt(reservationDetails.guests),
-        // removed created_date here, backend should handle it
+        
       };
 
       const res = await fetch(

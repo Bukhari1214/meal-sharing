@@ -103,11 +103,11 @@ export default function Header() {
                     Meals
                   </Link>
                 </li>
-                {/* <li>
+                <li>
                   <Link href="/search" onClick={handleLinkClick}>
                     Search
                   </Link>
-                </li> */}
+                </li>
                 <li>
                   <Link href="/contact" onClick={handleLinkClick}>
                     Contact
@@ -127,9 +127,9 @@ export default function Header() {
             <li>
               <Link href="/meals">Meals</Link>
             </li>
-            {/* <li>
+            <li>
               <Link href="/search">Search</Link>
-            </li> */}
+            </li>
             <li>
               <Link href="/contact">Contact</Link>
             </li>
