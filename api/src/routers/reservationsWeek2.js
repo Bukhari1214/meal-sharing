@@ -21,6 +21,7 @@ const reservations = express.Router();
 // });
 
 // This is the GET route (localhost:3005/api/reservations/my-reservations) to get all RESERVATIONS from the database.
+
 reservations.get("/", async (req, res) => {
   try {
     const reservations = await knex("reservation")
@@ -36,7 +37,7 @@ reservations.get("/", async (req, res) => {
 // This is the Post route (localhost:3005/api/reservations/my-reservations) to add new RESERVATION to the database.
 reservations.post("/", async (req, res) => {
   try {
-    const {
+    let {
       meal_id,
       number_of_guests,
       created_date,
@@ -56,10 +57,13 @@ reservations.post("/", async (req, res) => {
       return res.status(400).json({ error: "All fields are required" });
     }
 
-    if (typeof meal_id !== "number" || typeof number_of_guests !== "number") {
+    meal_id = Number(meal_id);
+    number_of_guests = Number(number_of_guests);
+
+    if (isNaN(meal_id) || isNaN(number_of_guests)) {
       return res
         .status(400)
-        .json({ error: "meal_id and number_of_guests must be numbers" });
+        .json({ error: "meal_id and number_of_guests must be valid numbers" });
     }
 
     const [newReservationId] = await knex("reservation").insert({

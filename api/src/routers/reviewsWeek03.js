@@ -47,25 +47,29 @@ reviews.get("/:meal_id/reviews", async (req, res) => {
 reviews.post("/", async (req, res) => {
   const { title, description, stars, meal_id } = req.body;
 
-  if (!title || !description || !stars || !meal_id) {
+  if (!title || !description || stars === undefined || meal_id === undefined) {
     return res.status(400).json({ error: "All fields are required" });
   }
 
-  if (typeof meal_id !== "number" || typeof stars !== "number") {
-    if (stars < 1 || stars > 5) {
-      return res.status(400).json({ error: "Rating must be between 1 and 5" });
-    }
+  const mealIdNum = Number(meal_id);
+  const starsNum = Number(stars);
+
+  if (isNaN(mealIdNum) || isNaN(starsNum)) {
     return res
       .status(400)
-      .json({ error: "meal_id and rating must be numbers" });
+      .json({ error: "meal_id and stars must be valid numbers" });
+  }
+
+  if (starsNum < 1 || starsNum > 5) {
+    return res.status(400).json({ error: "Rating must be between 1 and 5" });
   }
 
   try {
     const [newReviewId] = await knex("review").insert({
       title,
       description,
-      stars,
-      meal_id,
+      stars: starsNum,
+      meal_id: mealIdNum,
     });
 
     const newReview = await knex("review").where({ id: newReviewId }).first();
