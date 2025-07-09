@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./ReservationForm.css";
 
 export default function ReservationForm({ meal, onClose }) {
@@ -11,15 +11,8 @@ export default function ReservationForm({ meal, onClose }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [formattedDate, setFormattedDate] = useState("");
   const [reservationDetails, setReservationDetails] = useState(null);
   const [showConfirm, setShowConfirm] = useState(false);
-
-  useEffect(() => {
-    const now = new Date();
-    const formatted = now.toISOString().slice(0, 19).replace("T", " ");
-    setFormattedDate(formatted);
-  }, []);
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -50,7 +43,7 @@ export default function ReservationForm({ meal, onClose }) {
         contact_phonenumber: reservationDetails.phone,
         contact_email: reservationDetails.email,
         number_of_guests: parseInt(reservationDetails.guests),
-        created_date: formattedDate,
+        // removed created_date here, backend should handle it
       };
 
       const res = await fetch(
@@ -77,10 +70,6 @@ export default function ReservationForm({ meal, onClose }) {
       setPhone("");
       setEmail("");
       setGuests(1);
-
-      const now = new Date();
-      const refreshed = now.toISOString().slice(0, 19).replace("T", " ");
-      setFormattedDate(refreshed);
 
       setTimeout(() => {
         setSuccess(false);
