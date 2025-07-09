@@ -72,16 +72,24 @@ reservations.post("/", async (req, res) => {
       contact_email,
     });
 
+    console.log("Inserted reservation ID:", newReservationId);
+
     const newReservation = await knex("reservation")
       .where({ id: newReservationId })
       .first();
+
+    if (!newReservation) {
+      return res.status(201).json({
+        message: "Record added successfully, but failed to fetch reservation.",
+      });
+    }
 
     res.status(201).json({
       message: "Record added successfully",
       reservation: newReservation,
     });
   } catch (error) {
-    console.error("Error adding RESERVATION:", error);
+    console.error("Error adding RESERVATION:", error.message);
     res.status(500).json({ error: "Internal server error" });
   }
 });

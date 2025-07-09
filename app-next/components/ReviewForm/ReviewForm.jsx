@@ -51,7 +51,7 @@ export default function ReviewForm({ meal, onClose, onSuccess }) {
       setDescription("");
       setStars(5);
 
-      onSuccess();
+      // onSuccess();
     } catch (err) {
       setError(err.message);
     } finally {
