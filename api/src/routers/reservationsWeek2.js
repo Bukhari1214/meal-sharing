@@ -22,6 +22,18 @@ const reservations = express.Router();
 
 // This is the GET route (localhost:3005/api/reservations/my-reservations) to get all RESERVATIONS from the database.
 
+// reservations.get("/", async (req, res) => {
+//   try {
+//     const reservations = await knex("reservation")
+//       .select("*")
+//       .orderBy("id", "asc");
+//     res.json(reservations);
+//   } catch (error) {
+//     console.error("Error fetching RESERVATIONS:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
 reservations.get("/", async (req, res) => {
   try {
     const reservations = await knex("reservation")
@@ -29,12 +41,71 @@ reservations.get("/", async (req, res) => {
       .orderBy("id", "asc");
     res.json(reservations);
   } catch (error) {
-    console.error("Error fetching RESERVATIONS:", error);
+    console.error("Error fetching reservations:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
 // This is the Post route (localhost:3005/api/reservations/my-reservations) to add new RESERVATION to the database.
+// reservations.post("/", async (req, res) => {
+//   try {
+//     let {
+//       meal_id,
+//       number_of_guests,
+//       contact_phonenumber,
+//       contact_name,
+//       contact_email,
+//     } = req.body;
+
+//     if (
+//       !meal_id ||
+//       !number_of_guests ||
+//       !contact_phonenumber ||
+//       !contact_name ||
+//       !contact_email
+//     ) {
+//       return res.status(400).json({ error: "All fields are required" });
+//     }
+
+//     meal_id = Number(meal_id);
+//     number_of_guests = Number(number_of_guests);
+
+//     if (isNaN(meal_id) || isNaN(number_of_guests)) {
+//       return res
+//         .status(400)
+//         .json({ error: "meal_id and number_of_guests must be valid numbers" });
+//     }
+
+//     const [newReservationId] = await knex("reservation").insert({
+//       meal_id,
+//       number_of_guests,
+//       contact_phonenumber,
+//       contact_name,
+//       contact_email,
+//     });
+
+//     console.log("Inserted reservation ID:", newReservationId);
+
+//     const newReservation = await knex("reservation")
+//       .where({ id: newReservationId })
+//       .first();
+
+//     if (!newReservation) {
+//       return res.status(201).json({
+//         message: "Record added successfully, but failed to fetch reservation.",
+//       });
+//     }
+
+//     res.status(201).json({
+//       message: "Record added successfully",
+//       reservation: newReservation,
+//     });
+//   } catch (error) {
+//     console.error("Error adding RESERVATION:", error.message);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
 reservations.post("/", async (req, res) => {
   try {
     let {
@@ -64,13 +135,15 @@ reservations.post("/", async (req, res) => {
         .json({ error: "meal_id and number_of_guests must be valid numbers" });
     }
 
-    const [newReservationId] = await knex("reservation").insert({
-      meal_id,
-      number_of_guests,
-      contact_phonenumber,
-      contact_name,
-      contact_email,
-    });
+    const [newReservationId] = await knex("reservation")
+      .insert({
+        meal_id,
+        number_of_guests,
+        contact_phonenumber,
+        contact_name,
+        contact_email,
+      })
+      .returning("id");
 
     console.log("Inserted reservation ID:", newReservationId);
 
@@ -89,7 +162,7 @@ reservations.post("/", async (req, res) => {
       reservation: newReservation,
     });
   } catch (error) {
-    console.error("Error adding RESERVATION:", error.message);
+    console.error("Error adding reservation:", error.message);
     res.status(500).json({ error: "Internal server error" });
   }
 });

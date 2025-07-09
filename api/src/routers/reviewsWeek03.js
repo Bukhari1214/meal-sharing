@@ -5,6 +5,16 @@ const reviews = express.Router();
 
 //ENDPOINT /api/reviews (GET)
 
+// reviews.get("/", async (req, res) => {
+//   try {
+//     const reviews = await knex("review").select("*").orderBy("id", "asc");
+//     res.json(reviews);
+//   } catch (error) {
+//     console.error("Error fetching Reviews:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
 reviews.get("/", async (req, res) => {
   try {
     const reviews = await knex("review").select("*").orderBy("id", "asc");
@@ -44,6 +54,42 @@ reviews.get("/:meal_id/reviews", async (req, res) => {
 
 // ENDPOINT /api/reviews (POST)
 
+// reviews.post("/", async (req, res) => {
+//   const { title, description, stars, meal_id } = req.body;
+
+//   if (!title || !description || stars === undefined || meal_id === undefined) {
+//     return res.status(400).json({ error: "All fields are required" });
+//   }
+
+//   if (typeof meal_id !== "number" || typeof stars !== "number") {
+//     return res
+//       .status(400)
+//       .json({ error: "meal_id and rating must be numbers" });
+//   }
+
+//   if (stars < 1 || stars > 5) {
+//     return res.status(400).json({ error: "Rating must be between 1 and 5" });
+//   }
+
+//   try {
+//     const [newReviewId] = await knex("review").insert({
+//       title,
+//       description,
+//       stars,
+//       meal_id,
+//     });
+
+//     const newReview = await knex("review").where({ id: newReviewId }).first();
+//     res.status(201).json({
+//       message: "Record added successfully",
+//       newReview: newReview,
+//     });
+//   } catch (error) {
+//     console.error("Error adding review:", error);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
 reviews.post("/", async (req, res) => {
   const { title, description, stars, meal_id } = req.body;
 
@@ -52,9 +98,7 @@ reviews.post("/", async (req, res) => {
   }
 
   if (typeof meal_id !== "number" || typeof stars !== "number") {
-    return res
-      .status(400)
-      .json({ error: "meal_id and rating must be numbers" });
+    return res.status(400).json({ error: "meal_id and stars must be numbers" });
   }
 
   if (stars < 1 || stars > 5) {
@@ -62,17 +106,20 @@ reviews.post("/", async (req, res) => {
   }
 
   try {
-    const [newReviewId] = await knex("review").insert({
-      title,
-      description,
-      stars,
-      meal_id,
-    });
+    const [newReviewId] = await knex("review")
+      .insert({
+        title,
+        description,
+        stars,
+        meal_id,
+      })
+      .returning("id"); // important for Postgres to get inserted id
 
     const newReview = await knex("review").where({ id: newReviewId }).first();
+
     res.status(201).json({
       message: "Record added successfully",
-      newReview: newReview,
+      newReview,
     });
   } catch (error) {
     console.error("Error adding review:", error);

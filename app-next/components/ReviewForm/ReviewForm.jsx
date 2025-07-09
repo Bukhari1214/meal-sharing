@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-export default function ReviewForm({ meal, onClose, onSuccess }) {
+export default function ReviewForm({ meal, onClose}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [stars, setStars] = useState(5);
@@ -50,9 +50,7 @@ export default function ReviewForm({ meal, onClose, onSuccess }) {
       setTitle("");
       setDescription("");
       setStars(5);
-
-      // onSuccess();
-    } catch (err) {
+   } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
