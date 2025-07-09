@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function ReviewForm({ meal, onClose, onSuccess }) {
   const [title, setTitle] = useState("");
@@ -9,13 +9,6 @@ export default function ReviewForm({ meal, onClose, onSuccess }) {
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [formattedDate, setFormattedDate] = useState("");
-
-  useEffect(() => {
-    const now = new Date();
-    const formatted = now.toISOString();
-    setFormattedDate(formatted);
-  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -32,7 +25,6 @@ export default function ReviewForm({ meal, onClose, onSuccess }) {
       title,
       description,
       stars: parseInt(stars),
-      created_date: formattedDate,
     };
 
     setLoading(true);
@@ -58,9 +50,6 @@ export default function ReviewForm({ meal, onClose, onSuccess }) {
       setTitle("");
       setDescription("");
       setStars(5);
-
-      const now = new Date();
-      setFormattedDate(now.toISOString());
 
       onSuccess();
     } catch (err) {

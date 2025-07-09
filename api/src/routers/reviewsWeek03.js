@@ -44,41 +44,53 @@ reviews.get("/:meal_id/reviews", async (req, res) => {
 
 // ENDPOINT /api/reviews (POST)
 
-reviews.post("/", async (req, res) => {
-  const { title, description, stars, meal_id } = req.body;
-
-  if (!title || !description || stars === undefined || meal_id === undefined) {
-    return res.status(400).json({ error: "All fields are required" });
-  }
-
-  const mealIdNum = Number(meal_id);
-  const starsNum = Number(stars);
-
-  if (isNaN(mealIdNum) || isNaN(starsNum)) {
-    return res
-      .status(400)
-      .json({ error: "meal_id and stars must be valid numbers" });
-  }
-
-  if (starsNum < 1 || starsNum > 5) {
-    return res.status(400).json({ error: "Rating must be between 1 and 5" });
-  }
-
+reservations.post("/", async (req, res) => {
   try {
-    const [newReviewId] = await knex("review").insert({
-      title,
-      description,
-      stars: starsNum,
-      meal_id: mealIdNum,
+    let {
+      meal_id,
+      number_of_guests,
+      contact_phonenumber,
+      contact_name,
+      contact_email,
+    } = req.body;
+
+    if (
+      !meal_id ||
+      !number_of_guests ||
+      !contact_phonenumber ||
+      !contact_name ||
+      !contact_email
+    ) {
+      return res.status(400).json({ error: "All fields are required" });
+    }
+
+    meal_id = Number(meal_id);
+    number_of_guests = Number(number_of_guests);
+
+    if (isNaN(meal_id) || isNaN(number_of_guests)) {
+      return res.status(400).json({
+        error: "meal_id and number_of_guests must be valid numbers",
+      });
+    }
+
+    const [newReservationId] = await knex("reservation").insert({
+      meal_id,
+      number_of_guests,
+      contact_phonenumber,
+      contact_name,
+      contact_email,
     });
 
-    const newReview = await knex("review").where({ id: newReviewId }).first();
+    const newReservation = await knex("reservation")
+      .where({ id: newReservationId })
+      .first();
+
     res.status(201).json({
       message: "Record added successfully",
-      newReview: newReview,
+      reservation: newReservation,
     });
   } catch (error) {
-    console.error("Error adding review:", error);
+    console.error("Error adding RESERVATION:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
