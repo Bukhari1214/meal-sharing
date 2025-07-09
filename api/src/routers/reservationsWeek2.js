@@ -64,15 +64,9 @@ reservations.post("/", async (req, res) => {
         .json({ error: "meal_id and number_of_guests must be valid numbers" });
     }
 
-    const created_date = new Date()
-      .toISOString()
-      .slice(0, 19)
-      .replace("T", " ");
-
     const [newReservationId] = await knex("reservation").insert({
       meal_id,
       number_of_guests,
-      created_date,
       contact_phonenumber,
       contact_name,
       contact_email,
