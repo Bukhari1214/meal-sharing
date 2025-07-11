@@ -36,9 +36,12 @@ export default function ReviewForm({ meal, onClose}) {
         body: JSON.stringify(reviewData),
       });
 
+  
+      const result = await res.json();
+      console.log("Review submission result:", result);
+
       if (!res.ok) {
-        const errData = await res.json();
-        throw new Error(errData.error || "Failed to submit review");
+        throw new Error(result.error || "Failed to make reservation");
       }
 
       setSuccess(

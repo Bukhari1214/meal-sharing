@@ -136,14 +136,6 @@ reservations.post("/", async (req, res) => {
       });
     }
 
-    console.log("Inserting reservation with:", {
-      parsedMealId,
-      parsedGuests,
-      contact_phonenumber,
-      contact_name,
-      contact_email,
-    });
-
     const result = await knex("reservation")
       .insert({
         meal_id: parsedMealId,
@@ -165,7 +157,6 @@ reservations.post("/", async (req, res) => {
       reservation: newReservation,
     });
   } catch (error) {
-    console.error("Error adding RESERVATION:", error);
     return res.status(500).json({
       error: "Internal server error",
       details: error.message || error.toString(),
