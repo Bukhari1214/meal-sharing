@@ -62,11 +62,13 @@ export default function MealDetails({ meal }) {
       ) : (
         <>
           <Stars count={averageStars} />
-          <img
+          <div class="image-container">
+            <img
             src={`/images/${meal.id}.png`}
             alt={meal.title}
             className="meal-image"
           />
+          </div>
         </>
       )}
 
