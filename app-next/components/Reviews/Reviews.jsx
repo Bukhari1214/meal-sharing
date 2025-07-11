@@ -4,17 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import "./Reviews.css";
 import ReviewForm from "../ReviewForm/ReviewForm.jsx";
-
-function Stars({ count }) {
-  const maxStars = 5;
-  const fullStar = "★";
-  const emptyStar = "☆";
-  return (
-    <span className="stars" aria-label={`${count} out of 5 stars`} role="img">
-      {[...Array(maxStars)].map((_, i) => (i < count ? fullStar : emptyStar))}
-    </span>
-  );
-}
+import Stars from "../ReviewStars/ReviewStars";
 
 export default function Reviews({ meal, onClose }) {
   const router = useRouter();

@@ -115,8 +115,6 @@ reviews.post("/", async (req, res) => {
       })
       .returning("*");
 
-    console.log("✅ Inserted review:", insertedReview);
-
     res.status(201).json({
       message: "Record added successfully",
       newReview: insertedReview,
