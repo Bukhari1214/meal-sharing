@@ -1,0 +1,99 @@
+.aboutContainer {
+  width: 100%;
+  max-width: 100%;
+  margin: auto;
+  padding: 1rem 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #3e2f26;
+}
+
+.aboutContent h1 {
+  display: block;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #fff;
+  font-family: "Dearmas", cursive;
+  font-style: italic;
+  text-align: center;
+  text-shadow: 0 0 6px rgba(255, 215, 0, 0.8), 0 0 12px rgba(255, 215, 0, 0.6),
+    0 0 18px rgba(255, 215, 0, 0.4);
+  transition: text-shadow 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.aboutContent h1:hover {
+  transform: scale(1.1);
+  text-shadow: 0 0 12px rgba(255, 215, 0, 1), 0 0 24px rgba(255, 215, 0, 0.8),
+    0 0 36px rgba(255, 215, 0, 0.6);
+}
+
+.aboutContent p {
+  max-width: 700px;
+  margin: 1rem auto 2rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: white;
+  text-align: justify;
+  text-shadow: 0 0 5px #f5c518, 0 0 10px #ffeb3b, 0 0 15px #f5c518;
+  transition: transform 0.3s ease;
+}
+
+.aboutContent p:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 599px) {
+  .aboutContainer {
+    padding: 0 0.75rem;
+    margin: 1.5rem 0;
+  }
+  .aboutContent h1 {
+    font-size: 1.6rem;
+  }
+  .aboutContent p {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 600px) {
+  .aboutContainer {
+    max-width: 540px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+  }
+  .aboutContent h1 {
+    font-size: 2.2rem;
+  }
+  .aboutContent p {
+    font-size: 1.05rem;
+    line-height: 1.6;
+  }
+}
+
+@media (min-width: 900px) {
+  .aboutContainer {
+    max-width: 720px;
+  }
+  .aboutContent h1 {
+    font-size: 2.5rem;
+  }
+  .aboutContent p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+  }
+}
+
+@media (min-width: 1200px) {
+  .aboutContainer {
+    max-width: 900px;
+  }
+  .aboutContent h1 {
+    font-size: 2.8rem;
+  }
+  .aboutContent p {
+    font-size: 1.15rem;
+    line-height: 1.8;
+  }
+}

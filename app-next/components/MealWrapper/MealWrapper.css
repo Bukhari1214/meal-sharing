@@ -1,0 +1,66 @@
+.popup-overlay {
+  position: fixed !important;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 999999;
+
+  animation: fadeIn 0.3s ease;
+}
+
+.popup-content {
+  background: #fff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  max-width: 600px;
+  width: 90vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.3s ease;
+}
+
+.close-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: transparent;
+  border: none;
+  font-size: 2rem;
+  color: #444;
+  cursor: pointer;
+  z-index: 10001;
+}
+
+.close-button:hover {
+  color: #000;
+}
+
+@keyframes fadeIn {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
