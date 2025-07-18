@@ -59,7 +59,12 @@ meals.get("/", async (req, res) => {
     const query = knex("meal")
       .leftJoin(subQuery.as("r"), "meal.id", "r.meal_id")
       .select("meal.*")
-      .select(knex.raw("COALESCE(r.reservation_count, 0) as reservation_count"))
+      .select(
+        knex.raw("COALESCE(r.reservation_count, 0) as reservation_count"),
+        knex.raw(
+          "(meal.max_reservations - COALESCE(r.reservation_count, 0)) as reservations_left"
+        )
+      )
       .orderBy("meal.id", "asc");
 
     // FOR api/meals?maxPrice=90
@@ -128,7 +133,13 @@ meals.get("/", async (req, res) => {
     // Sorting logic
     // Allowed sort keys and directions ASC/DESC
     // api/meals?sortkey=when
-    const allowedSortKeys = ["when", "max_reservations", "price"];
+    const allowedSortKeys = [
+      "when",
+      "max_reservations",
+      "price",
+      "title",
+      "reservations_left",
+    ];
     const allowedSortDirs = ["asc", "desc"];
 
     let sortKey = "meal.id";
@@ -136,21 +147,31 @@ meals.get("/", async (req, res) => {
 
     if ("sortkey" in normalizedQuery) {
       const key = normalizedQuery.sortkey.toLowerCase();
+      console;
       if (!allowedSortKeys.includes(key)) {
         return res.status(400).json({
           error: `Invalid sortKey. Allowed keys: ${allowedSortKeys.join(", ")}`,
         });
       }
-      sortKey = `meal.${key}`;
+
+      if (key === "title") {
+        sortKey = "meal.title";
+      } else if (key === "reservations_left") {
+        sortKey = knex.raw(
+          "(meal.max_reservations - COALESCE(r.reservation_count, 0))"
+        );
+      } else {
+        sortKey = `meal.${key}`;
+      }
     }
 
-    // api/meals?sortkey=when&sortdir=asc
     if ("sortdir" in normalizedQuery) {
       if (!("sortkey" in normalizedQuery)) {
         return res.status(400).json({
           error: "sortDir parameter requires sortKey to be provided as well",
         });
       }
+
       const dir = normalizedQuery.sortdir.toLowerCase();
       if (!allowedSortDirs.includes(dir)) {
         return res.status(400).json({
@@ -161,12 +182,18 @@ meals.get("/", async (req, res) => {
     }
 
     query.clearOrder();
-    query.orderBy(sortKey, sortDir);
 
-    const meals = await query;
-    res.json(meals);
+    if (typeof sortKey === "string") {
+      query.orderBy(sortKey, sortDir);
+    } else {
+      query.orderBy(sortKey, sortDir);
+    }
+
+    // Execute the query and send the result
+    const mealsResult = await query;
+    res.json(mealsResult);
   } catch (error) {
-    console.error("Full error:", error.stack || error);
+    console.error("Error fetching meals:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
@@ -354,5 +381,3 @@ meals.delete("/:id", async (req, res) => {
 });
 
 export default meals;
-
-// I Tried and Run All Routes and they are working fine.

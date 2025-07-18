@@ -1,0 +1,41 @@
+/* Stylish button */
+.button {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 15px rgba(107, 115, 255, 0.4);
+  user-select: none;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* Hover effect */
+.button:hover,
+.button:focus {
+  background: linear-gradient(135deg, #000dff 0%, #6b73ff 100%);
+  box-shadow: 0 6px 20px rgba(0, 13, 255, 0.6);
+  transform: translateY(-3px);
+  outline: none;
+}
+
+/* Active effect */
+.button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(0, 13, 255, 0.3);
+}
+
+/* Disabled button */
+.button:disabled {
+  background: #ccc;
+  color: #666;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
