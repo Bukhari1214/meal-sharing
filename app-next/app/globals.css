@@ -111,6 +111,47 @@ footer {
   padding: 0 1rem;
 }
 
+.sort-controls {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  width: 100%;
+}
+
+.sort-controls label {
+  font-size: 1rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 300px;
+  text-shadow: 0 0 6px #f5c518;
+}
+
+.dropdown {
+  padding: 0.5rem 0.75rem;
+  font-size: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #111;
+  color: #ffd700;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 0.3rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 0 5px rgba(255, 215, 0, 0.4);
+}
+
+.dropdown:focus {
+  outline: none;
+  border-color: #ffd700;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+
 .meals-heading {
   font-size: 2rem;
   font-weight: 700;
@@ -217,16 +258,60 @@ footer {
   .meals-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+   .sort-controls {
+    flex-direction: row;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  .sort-controls label {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    max-width: 200px;
+  }
+
+  .dropdown {
+    font-size: 1rem;
+    max-width: 200px;
+  }
 }
 
 @media (min-width: 900px) {
   .meals-grid {
     grid-template-columns: repeat(3, 1fr);
   }
+  .sort-controls {
+    gap: 3rem;
+    margin: 2.5rem 0;
+  }
+
+  .sort-controls label {
+    font-size: 1.1rem;
+  }
+
+  .dropdown {
+    font-size: 1.05rem;
+    padding: 0.6rem 1rem;
+  }
 }
 
 @media (min-width: 1200px) {
   .meals-grid {
     grid-template-columns: repeat(4, 1fr);
+  }
+  .sort-controls {
+    gap: 4rem;
+  }
+
+  .sort-controls label {
+    font-size: 1.15rem;
+    max-width: 250px;
+  }
+
+  .dropdown {
+    font-size: 1.1rem;
+    max-width: 250px;
   }
 }
